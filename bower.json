@@ -1,0 +1,12 @@
+{
+  "name": "snippets",
+  "version": "0.0.1",
+  "main": "snippets.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
