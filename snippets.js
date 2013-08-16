@@ -7,7 +7,7 @@
 })('snippets', function (exports) {
 
   // Redable English relative dates.
-  exports.timeDelta = function timeDelta (d) {
+  var timeDelta = exports.timeDelta = function timeDelta (d) {
     d = Date.parse(d);
     if (!d) return 'unknown';
     d = (Date.now() - d) / 1000 | 0;
@@ -32,6 +32,36 @@
     // Years
     if (d < 365 * 2) return 'a year' + suffix;
     return (d / 365 | 0) + ' years' + suffix;
+  };
+
+  // Get a JS Object of the query parameters in a url.
+  var queryParams = exports.queryParams = function queryParams (url) {
+    // Isolate the querystring.
+    if (url.indexOf('?') >= 0) {
+      url = url.split('?')[1];
+    }
+    var obj = {};
+    var pairs = url.split('&');
+
+    pairs.forEach(function(p) {
+      p = p.split('=');
+      obj[p[0]] = typeof p[1] === 'undefined' ? true: p[1];
+    });
+
+    return obj;
   }
+
+  // Slice any array-like object.
+  var slice = exports.slice = function slice (a, offset) {
+    return Array.prototype.slice.call(a, offset);
+  };
+
+  // Partial Application of functions.
+  var partial = exports.partial = function partial (fn) {
+    var args = slice(arguments, 1);
+    return function() {
+        return fn.apply(this, Array.prototype.concat.apply(args, arguments));
+    };
+  };
 
 });
